@@ -1,40 +1,34 @@
-# Создание пустого игрового поля
 def create_board():
     return [[" " for _ in range(3)] for _ in range(3)]
 
-# Печать поля в консоль
 def print_board(board):
-    print("   1 2 3")  # Заголовок колонок
+    print("   1 2 3")
     for i, row in enumerate(board):
-        print(f"{i + 1}  {'|'.join(row)}")  # Нумерация строк от 1
+        print(f"{i + 1}  {'|'.join(row)}")
         if i < 2:
             print("  -----")
 
-# Проверка победы
 def check_win(board, player):
     for i in range(3):
-        if all(cell == player for cell in board[i]):  # Строка
+        if all(cell == player for cell in board[i]):
             return True
-        if all(row[i] == player for row in board):    # Столбец
+        if all(row[i] == player for row in board):
             return True
-    # Диагонали
     if all(board[i][i] == player for i in range(3)):
         return True
     if all(board[i][2 - i] == player for i in range(3)):
         return True
     return False
 
-# Проверка на ничью
 def check_draw(board):
     return all(cell != " " for row in board for cell in row)
 
-# Получение корректного хода от игрока
 def get_move(player, board):
     while True:
         try:
             coords = input(f"Игрок {player}, введите координаты хода (формат: строка столбец, например: 2 3): ")
             y, x = map(int, coords.strip().split())
-            x -= 1  # перевод в индексы от 0
+            x -= 1
             y -= 1
             if x in range(3) and y in range(3):
                 if board[y][x] == " ":
@@ -46,7 +40,6 @@ def get_move(player, board):
         except ValueError:
             print("Неверный формат. Введите два числа через пробел.")
 
-# Основной игровой цикл
 def play_game():
     board = create_board()
     current_player = "X"
@@ -67,6 +60,5 @@ def play_game():
 
         current_player = "O" if current_player == "X" else "X"
 
-# Запуск игры
 if __name__ == "__main__":
     play_game()
